@@ -25,10 +25,9 @@ const userPass = document.getElementById("pass")
 const userRoleSelect = document.getElementById("allRoles")
 //--------------------------------
 
-let modal = ""
-let modalForm = ""
-let submitBtn = ""
-let newPass = ""
+let modal = "";
+let modalForm = "";
+let submitBtn = "";
 
 let output = ``
 const renderTable = (users) => {
@@ -130,20 +129,11 @@ const renderTable = (users) => {
               </div>
 
               <div>
-                <label for="passNew" class="form-label">Password</label>
+                <label for="pass" class="form-label">Password</label>
                 <input
                   type="password"
                   id="pass"
-                  class="form-control d-none"
-                  placeholder="Password"
-                />
-              </div>
-              <div>
-                <input
-                  type="password"
-                  id="newPass"
-                  value="password"
-                  class="newPass form-control"
+                  class="form-control"
                   placeholder="Password"
                 />
               </div>
@@ -265,25 +255,16 @@ const renderTable = (users) => {
               </div>
 
               <div>
-                <label for="newPass" class="form-label">Password</label>
+                <label for="pass" class="form-label">Password</label>
                 <input
                   type="password"
                   id="pass"
-                  class="form-control d-none"
+                  class="form-control"
                   placeholder="Password"
                   disabled
                 />
               </div>
-              <div>
-                <input
-                  type="password"
-                  id="newPass"
-                  value="password"
-                  class="newPass form-control"
-                  placeholder="Password"
-                  disabled
-                />
-              </div>
+              
 
               <div class="mb-3">
                 <label for="allRoles" class="form-label">Role</label>
@@ -370,7 +351,8 @@ createUserForm.addEventListener("submit", (e) => {
         }),
     })
         .then((response) => response.json())
-        .then((data) => renderTable(data))
+        .then((data) => {
+            renderTable(data)})
 
     createUserForm.reset()
 
@@ -398,7 +380,6 @@ tableContainer.addEventListener("click", (e) => {
             modal = document.getElementById("editModal")
             modalForm = modal.querySelector(".edit-user-put-form")
             submitBtn = modal.querySelector(".submit")
-            newPass = modal.querySelector(".newPass")
             modal.remove();
         }
         if (mode === "delete") {
@@ -426,7 +407,7 @@ tableContainer.addEventListener("click", (e) => {
                 modalForm.surname.value = user.surname
                 modalForm.age.value = user.age
                 modalForm.email.value = user.email
-                modalForm.pass.value = user.pass;
+                // modalForm.pass.value = user.pass;
 
                 const userRoleSelect = modalForm.allRoles
                 const userRoles = user.roles
@@ -458,10 +439,6 @@ tableContainer.addEventListener("click", (e) => {
 
 
                 if (mode === "edit") {
-                    newPass.onchange = () => {
-                        modalForm.pass.value = newPass.value;
-                    }
-
 
                     submitBtn.addEventListener("click", (e) => {
                         e.preventDefault()
@@ -503,5 +480,3 @@ tableContainer.addEventListener("click", (e) => {
             })
     }
 })
-//пароли
-//новый пользователь
