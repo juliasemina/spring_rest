@@ -33,7 +33,7 @@ let output = ``
 const renderTable = (users) => {
     users.forEach((user) => {
         output += `
-           <tr>
+           <tr id=${user.id}>
   <td>${user.id}</td>
   <td>${user.name}</td>
   <td>${user.surname}</td>
@@ -305,6 +305,7 @@ const renderTable = (users) => {
     tBody.innerHTML = output
 }
 
+
 //Get all users
 fetch(urlGetUsers)
     .then((response) => response.json())
@@ -461,7 +462,7 @@ tableContainer.addEventListener("click", (e) => {
                             }),
                         })
                             .then((response) => response.json())
-                            .then((data) => renderTable(data))
+                            .then((data) => renderRow(data))
                     })
                 }
                 if (mode === "delete") {
@@ -480,3 +481,278 @@ tableContainer.addEventListener("click", (e) => {
             })
     }
 })
+
+const renderRow = (user) => {
+console.log(user.id)
+    output += `
+           <tr id=${user.id}>
+  <td>${user.id}</td>
+  <td>${user.name}</td>
+  <td>${user.surname}</td>
+  <td>${user.age}</td>
+  <td>${user.email}</td>
+  <td>${user.rolesToString}</td>
+  <td data-id="${user.id}">
+    <button
+      id="edit-button"
+      class="action-button edit-button"
+      data-toggle="modal"
+      data-target="#editModal"
+    >
+      Edit
+    </button>
+
+    <div
+      id="editModal"
+      data-id="${user.id}"
+      class="modal fade"
+      tabindex="-1"
+      aria-labelledby="editModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+            <button
+              type="button"
+              class="btn-close close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form data-id="editForm" class="edit-user-put-form">
+              <div>
+                <label for="id" class="form-label">Id</label>
+                <input
+                  type="text"
+                  id="id"
+                  class="form-control"
+                  placeholder="Id"
+                  required
+                  disabled
+                />
+              </div>
+              <div>
+                <label for="name" class="form-label">First name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  placeholder="First name"
+                  required
+                />
+              </div>
+
+              <div>
+                <label for="surname" class="form-label">Last name</label>
+                <input
+                  type="text"
+                  id="surname"
+                  class="form-control"
+                  placeholder="Last name"
+                  required
+                />
+              </div>
+
+              <div>
+                <label for="age" class="form-label">Age</label>
+                <input
+                  type="text"
+                  id="age"
+                  class="form-control"
+                  placeholder="Age"
+                  required
+                />
+              </div>
+
+              <div>
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="text"
+                  id="email"
+                  class="form-control"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+
+              <div>
+                <label for="pass" class="form-label">Password</label>
+                <input
+                  type="password"
+                  id="pass"
+                  class="form-control"
+                  placeholder="Password"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="allRoles" class="form-label">Role</label>
+                <select
+                  class="form-select"
+                  id="allRoles"
+                  name="allRolesName"
+                  multiple
+                ></select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-close btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              form="editForm"
+              class="btn btn-primary submit"
+              data-dismiss="modal"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </td>
+
+  <td data-id="${user.id}">
+    <button
+      id="delete-button"
+      class="action-button delete-button"
+      data-toggle="modal"
+      data-target="#deleteModal">
+      Delete
+    </button>
+    <div id="deleteModal" class="modal fade" data-id="${user.id}" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+            <button
+              type="button"
+              class="btn-close close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="delete-user-form">
+              <div>
+                <label for="id" class="form-label">Id</label>
+                <input
+                  type="text"
+                  id="id"
+                  class="form-control"
+                  placeholder="Id"
+                  required
+                  disabled
+                />
+              </div>
+              <div>
+                <label for="name" class="form-label">First name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  placeholder="First name"
+                  required
+                  disabled
+                />
+              </div>
+
+              <div>
+                <label for="surname" class="form-label">Last name</label>
+                <input
+                  type="text"
+                  id="surname"
+                  class="form-control"
+                  placeholder="Last name"
+                  required
+                  disabled
+                />
+              </div>
+
+              <div>
+                <label for="age" class="form-label">Age</label>
+                <input
+                  type="text"
+                  id="age"
+                  class="form-control"
+                  placeholder="Age"
+                  required
+                  disabled
+                />
+              </div>
+
+              <div>
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="text"
+                  id="email"
+                  class="form-control"
+                  placeholder="Email"
+                  required
+                  disabled
+                />
+              </div>
+
+              <div>
+                <label for="pass" class="form-label">Password</label>
+                <input
+                  type="password"
+                  id="pass"
+                  class="form-control"
+                  placeholder="Password"
+                  disabled
+                />
+              </div>
+              
+
+              <div class="mb-3">
+                <label for="allRoles" class="form-label">Role</label>
+                <select
+                disabled
+                  class="form-select"
+                  id="allRoles"
+                  name="allRolesName"
+                  multiple
+                ></select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-close btn-secondary action-button"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary submit"
+              data-dismiss="modal"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>
+`
+    const rowTBody = document.getElementById(`${user.id}`)
+    console.log(rowTBody.id)
+    rowTBody.innerHTML = output
+}

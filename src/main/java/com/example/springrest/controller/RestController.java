@@ -77,12 +77,12 @@ public class RestController {
     }
 
     @PutMapping("/admin/update-user")
-    public ResponseEntity<List<User>> updateUser(@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
         userService.save(user);
-        List<User> users = userService.getUsers();
+//        List<User> users = userService.getUsers();
 
-        return users != null && !users.isEmpty()
-                ? new ResponseEntity<>(users, HttpStatus.OK)
+        return user != null
+                ? new ResponseEntity<>(user, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
