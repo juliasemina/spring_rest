@@ -33,12 +33,14 @@ public class RestController {
     @GetMapping("/get-current-user")
     public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal UserDetails currentUser) {
         User curUser = userService.findByUsername(currentUser.getUsername());
+
         return new ResponseEntity<>(curUser, HttpStatus.OK);
     }
 
     @GetMapping("/admin/get-all-roles")
     public ResponseEntity<List<Role>> getAllRoles() {
         List<Role> roles = roleService.getAllRoles();
+
         return roles != null && !roles.isEmpty()
                 ? new ResponseEntity<>(roles, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -57,6 +59,7 @@ public class RestController {
     @GetMapping(value = "/admin/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable(name = "id") long id) {
         final User user = userService.getUserbyId(id);
+
         return user != null
                 ? new ResponseEntity<>(user, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -77,6 +80,7 @@ public class RestController {
     public ResponseEntity<List<User>> updateUser(@RequestBody User user) {
         userService.save(user);
         List<User> users = userService.getUsers();
+
         return users != null && !users.isEmpty()
                 ? new ResponseEntity<>(users, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -87,6 +91,7 @@ public class RestController {
     public ResponseEntity<List<User>> deleteUser(@PathVariable Long id) {
         userService.delete(id);
         List<User> users = userService.getUsers();
+
         return users != null && !users.isEmpty()
                 ? new ResponseEntity<>(users, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
